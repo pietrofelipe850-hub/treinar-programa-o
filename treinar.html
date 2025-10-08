@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudo de Programação</title>
+  <style>
+    :root {
+      --fundo: #1e1e1e;
+      --texto: #fff;
+      --destaque: #00bfff;
+      --editor: #2d2d2d;
+    }
+    [data-theme="light"] {
+      --fundo: #f5f5f5;
+      --texto: #222;
+      --destaque: #0077ff;
+      --editor: #e0e0e0;
+    }
+    * {
+      box-sizing: border-box;
+      transition: 0.3s ease;
+    }
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: var(--fundo);
+      color: var(--texto);
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: var(--editor);
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5em;
+      border-bottom: 3px solid var(--destaque);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header button {
+      background: var(--destaque);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+    .container {
+      display: flex;
+      height: 90vh;
+    }
+    .sidebar {
+      width: 20%;
+      background: var(--editor);
+      padding: 10px;
+      overflow-y: auto;
+    }
+    .sidebar h2 {
+      text-align: center;
+      color: var(--destaque);
+    }
+    .tarefa {
+      background: rgba(0,0,0,0.2);
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .tarefa.concluida {
+      background: rgba(0,255,100,0.2);
+      border-left: 4px solid #00ff88;
+    }
+    .tarefa:hover {
+      background: rgba(255,255,255,0.1);
+    }
+    .editor {
+      width: 40%;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    textarea {
+      background: var(--editor);
+      color: var(--texto);
+      border: none;
+      outline: none;
+      resize: none;
+      height: 25%;
+      font-family: monospace;
+      padding: 8px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    button.executar {
+      background: var(--destaque);
+      border: none;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      transition: 0.3s;
+    }
+    button.executar:hover {
+      background: #0099cc;
+    }
+    iframe {
+      width: 40%;
+      height: 100%;
+      border: none;
+      background: white;
+    }
+    .pontuacao {
+      text-align: center;
+      font-size: 1.1em;
+      margin-top: 5px;
+      color: var(--destaque);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span>💻 Estudo de Programação</span>
+    <button id="temaBtn">🌙 Alternar Tema</button>
+  </header>
+  <div class="container">
+    <div class="sidebar">
+      <h2>Desafios</h2>
+      <div id="listaTarefas"></div>
+      <div class="pontuacao">Pontuação: <span id="pontos">0</span></div>
+    </div>
+
+    <div class="editor">
+      <textarea id="html" placeholder="Escreva seu HTML aqui..."></textarea>
+      <textarea id="css" placeholder="Escreva seu CSS aqui..."></textarea>
+      <textarea id="js" placeholder="Escreva seu JavaScript aqui..."></textarea>
+      <button class="executar" onclick="executarCodigo()">▶️ Executar Código</button>
+    </div>
+
+    <iframe id="preview"></iframe>
+  </div>
+
+  <script>
+    const tarefas = [
+      { id: 1, titulo: "Botão muda cor do fundo", descricao: "Crie um botão que, ao clicar, muda a cor de fundo da página." },
+      { id: 2, titulo: "Contador de cliques", descricao: "Crie um botão que conta quantas vezes foi clicado e mostra o número." },
+      { id: 3, titulo: "Relógio digital", descricao: "Crie um relógio digital que mostra a hora atual e atualiza a cada segundo." },
+      { id: 4, titulo: "Lista de tarefas", descricao: "Crie uma lista onde o usuário possa adicionar e remover itens." }
+    ];
+
+    const listaTarefas = document.getElementById("listaTarefas");
+    const pontosEl = document.getElementById("pontos");
+
+    let pontos = parseInt(localStorage.getItem("pontos")) || 0;
+    pontosEl.textContent = pontos;
+
+    function renderTarefas() {
+      listaTarefas.innerHTML = "";
+      tarefas.forEach(tarefa => {
+        const div = document.createElement("div");
+        div.className = "tarefa";
+        if (localStorage.getItem("tarefa_" + tarefa.id) === "concluida") {
+          div.classList.add("concluida");
+        }
+        div.innerHTML = `<strong>${tarefa.titulo}</strong><br><small>${tarefa.descricao}</small>`;
+        div.onclick = () => selecionarTarefa(tarefa.id);
+        listaTarefas.appendChild(div);
+      });
+    }
+
+    function selecionarTarefa(id) {
+      const tarefa = tarefas.find(t => t.id === id);
+      alert("🧠 Desafio: " + tarefa.descricao + "\n\nQuando terminar, clique em OK para marcar como concluído!");
+      localStorage.setItem("tarefa_" + id, "concluida");
+      pontos += 10;
+      localStorage.setItem("pontos", pontos);
+      pontosEl.textContent = pontos;
+      renderTarefas();
+    }
+
+    function executarCodigo() {
+      const html = document.getElementById('html').value;
+      const css = "<style>" + document.getElementById('css').value + "</style>";
+      const js = "<script>" + document.getElementById('js').value + "<\/script>";
+      const preview = document.getElementById('preview');
+      preview.srcdoc = html + css + js;
+    }
+
+    // Alternar tema
+    const temaBtn = document.getElementById("temaBtn");
+    const temaAtual = localStorage.getItem("tema") || "dark";
+    document.documentElement.dataset.theme = temaAtual;
+    temaBtn.textContent = temaAtual === "dark" ? "🌙 Alternar Tema" : "☀️ Alternar Tema";
+
+    temaBtn.onclick = () => {
+      const novoTema = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = novoTema;
+      localStorage.setItem("tema", novoTema);
+      temaBtn.textContent = novoTema === "dark" ? "🌙 Alternar Tema" : "☀️ Alternar Tema";
+    };
+
+    renderTarefas();
+  </script>
+</body>
+</html>
