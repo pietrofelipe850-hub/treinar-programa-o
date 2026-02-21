@@ -118,12 +118,224 @@
       margin-top: 5px;
       color: var(--destaque);
     }
+
+    /* Agendamento */
+    .agendamento-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .agendamento-overlay.ativo {
+      display: flex;
+    }
+    .agendamento-painel {
+      background: var(--editor);
+      border-radius: 12px;
+      padding: 30px;
+      width: 90%;
+      max-width: 520px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      border: 1px solid var(--destaque);
+    }
+    .agendamento-painel h2 {
+      color: var(--destaque);
+      margin: 0 0 6px 0;
+      font-size: 1.4em;
+    }
+    .agendamento-painel p.subtitulo {
+      color: var(--texto);
+      opacity: 0.7;
+      margin: 0 0 20px 0;
+      font-size: 0.9em;
+    }
+    .agendamento-painel label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 600;
+      font-size: 0.95em;
+    }
+    .agendamento-painel input[type="text"],
+    .agendamento-painel input[type="date"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: var(--fundo);
+      color: var(--texto);
+      font-size: 1em;
+      margin-bottom: 16px;
+      outline: none;
+    }
+    .agendamento-painel input:focus {
+      border-color: var(--destaque);
+    }
+    .horarios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .horario-btn {
+      padding: 10px 0;
+      border-radius: 8px;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: transparent;
+      color: var(--texto);
+      font-size: 0.95em;
+      cursor: pointer;
+      font-weight: 500;
+      text-align: center;
+    }
+    .horario-btn:hover:not(.reservado):not(.selecionado) {
+      border-color: var(--destaque);
+      background: rgba(0,191,255,0.08);
+    }
+    .horario-btn.selecionado {
+      border-color: var(--destaque);
+      background: var(--destaque);
+      color: #fff;
+      font-weight: 700;
+    }
+    .horario-btn.reservado {
+      border-color: #ff4444;
+      background: rgba(255,68,68,0.15);
+      color: #ff6b6b;
+      cursor: not-allowed;
+      position: relative;
+      text-decoration: line-through;
+    }
+    .horario-btn.reservado::after {
+      content: "Reservado";
+      display: block;
+      font-size: 0.65em;
+      font-weight: 400;
+      text-decoration: none;
+      color: #ff6b6b;
+      margin-top: 2px;
+    }
+    .agendamento-acoes {
+      display: flex;
+      gap: 10px;
+    }
+    .btn-agendar {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: var(--destaque);
+      color: #fff;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-agendar:hover {
+      opacity: 0.85;
+    }
+    .btn-agendar:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .btn-fechar {
+      padding: 12px 20px;
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--texto);
+      font-size: 1em;
+      cursor: pointer;
+    }
+    .btn-fechar:hover {
+      border-color: #ff4444;
+      color: #ff4444;
+    }
+    .aviso-reservado {
+      display: none;
+      background: rgba(255,68,68,0.15);
+      border: 1px solid #ff4444;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      color: #ff6b6b;
+      font-size: 0.9em;
+      align-items: center;
+      gap: 8px;
+    }
+    .aviso-reservado.visivel {
+      display: flex;
+    }
+    .aviso-sucesso {
+      display: none;
+      background: rgba(0,255,100,0.12);
+      border: 1px solid #00ff88;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      color: #00ff88;
+      font-size: 0.9em;
+      align-items: center;
+      gap: 8px;
+    }
+    .aviso-sucesso.visivel {
+      display: flex;
+    }
+    .meus-agendamentos {
+      margin-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 16px;
+    }
+    .meus-agendamentos h3 {
+      color: var(--destaque);
+      margin: 0 0 10px 0;
+      font-size: 1em;
+    }
+    .agendamento-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.2);
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 0.9em;
+    }
+    .agendamento-item .info span {
+      opacity: 0.6;
+      font-size: 0.85em;
+    }
+    .btn-cancelar {
+      background: rgba(255,68,68,0.2);
+      border: 1px solid #ff4444;
+      color: #ff6b6b;
+      border-radius: 6px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-size: 0.8em;
+    }
+    .btn-cancelar:hover {
+      background: rgba(255,68,68,0.4);
+    }
+    .sem-agendamentos {
+      opacity: 0.5;
+      font-size: 0.85em;
+      text-align: center;
+      padding: 10px;
+    }
   </style>
 </head>
 <body>
   <header>
     <span>💻 Estudo de Programação</span>
-    <button id="temaBtn">🌙 Alternar Tema</button>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <button id="agendarBtn" onclick="abrirAgendamento()">📅 Agendar Horario</button>
+      <button id="temaBtn">🌙 Alternar Tema</button>
+    </div>
   </header>
   <div class="container">
     <div class="sidebar">
@@ -140,6 +352,42 @@
     </div>
 
     <iframe id="preview"></iframe>
+  </div>
+
+  <!-- Overlay de Agendamento -->
+  <div class="agendamento-overlay" id="agendamentoOverlay">
+    <div class="agendamento-painel">
+      <h2>📅 Agendar Horario</h2>
+      <p class="subtitulo">Escolha uma data e horario disponivel para sua sessao de estudo.</p>
+
+      <div class="aviso-reservado" id="avisoReservado">
+        <strong>⚠ Este horario ja foi reservado!</strong> Escolha outro horario disponivel.
+      </div>
+      <div class="aviso-sucesso" id="avisoSucesso">
+        <strong>✅ Horario agendado com sucesso!</strong>
+      </div>
+
+      <label for="nomeAgendamento">Seu nome</label>
+      <input type="text" id="nomeAgendamento" placeholder="Digite seu nome..." />
+
+      <label for="dataAgendamento">Data</label>
+      <input type="date" id="dataAgendamento" />
+
+      <label>Horarios disponiveis</label>
+      <div class="horarios-grid" id="horariosGrid"></div>
+
+      <div class="agendamento-acoes">
+        <button class="btn-agendar" id="btnConfirmar" disabled onclick="confirmarAgendamento()">Confirmar Agendamento</button>
+        <button class="btn-fechar" onclick="fecharAgendamento()">Fechar</button>
+      </div>
+
+      <div class="meus-agendamentos">
+        <h3>Meus Agendamentos</h3>
+        <div id="listaAgendamentos">
+          <div class="sem-agendamentos">Nenhum agendamento ainda.</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -202,6 +450,173 @@
     };
 
     renderTarefas();
+
+    // ===== Sistema de Agendamento =====
+    const horariosDisponiveis = [
+      "08:00", "09:00", "10:00",
+      "11:00", "13:00", "14:00",
+      "15:00", "16:00", "17:00"
+    ];
+
+    let horarioSelecionado = null;
+
+    function getAgendamentos() {
+      return JSON.parse(localStorage.getItem("agendamentos") || "[]");
+    }
+
+    function salvarAgendamentos(lista) {
+      localStorage.setItem("agendamentos", JSON.stringify(lista));
+    }
+
+    function abrirAgendamento() {
+      document.getElementById("agendamentoOverlay").classList.add("ativo");
+      document.getElementById("avisoReservado").classList.remove("visivel");
+      document.getElementById("avisoSucesso").classList.remove("visivel");
+      document.getElementById("nomeAgendamento").value = "";
+      horarioSelecionado = null;
+      document.getElementById("btnConfirmar").disabled = true;
+
+      const hoje = new Date().toISOString().split("T")[0];
+      const dataInput = document.getElementById("dataAgendamento");
+      dataInput.value = hoje;
+      dataInput.min = hoje;
+
+      renderHorarios();
+      renderMeusAgendamentos();
+    }
+
+    function fecharAgendamento() {
+      document.getElementById("agendamentoOverlay").classList.remove("ativo");
+    }
+
+    function renderHorarios() {
+      const grid = document.getElementById("horariosGrid");
+      const data = document.getElementById("dataAgendamento").value;
+      const agendamentos = getAgendamentos();
+
+      grid.innerHTML = "";
+      horarioSelecionado = null;
+      document.getElementById("btnConfirmar").disabled = true;
+      document.getElementById("avisoReservado").classList.remove("visivel");
+
+      horariosDisponiveis.forEach(hora => {
+        const btn = document.createElement("button");
+        btn.className = "horario-btn";
+        btn.textContent = hora;
+
+        const estaReservado = agendamentos.some(
+          a => a.data === data && a.horario === hora
+        );
+
+        if (estaReservado) {
+          btn.classList.add("reservado");
+          btn.onclick = () => {
+            document.getElementById("avisoReservado").classList.add("visivel");
+            document.getElementById("avisoSucesso").classList.remove("visivel");
+          };
+        } else {
+          btn.onclick = () => selecionarHorario(hora, btn);
+        }
+
+        grid.appendChild(btn);
+      });
+    }
+
+    function selecionarHorario(hora, btn) {
+      document.querySelectorAll(".horario-btn").forEach(b => b.classList.remove("selecionado"));
+      btn.classList.add("selecionado");
+      horarioSelecionado = hora;
+      document.getElementById("btnConfirmar").disabled = false;
+      document.getElementById("avisoReservado").classList.remove("visivel");
+      document.getElementById("avisoSucesso").classList.remove("visivel");
+    }
+
+    function confirmarAgendamento() {
+      const nome = document.getElementById("nomeAgendamento").value.trim();
+      const data = document.getElementById("dataAgendamento").value;
+
+      if (!nome) {
+        alert("Por favor, digite seu nome.");
+        return;
+      }
+      if (!data) {
+        alert("Por favor, selecione uma data.");
+        return;
+      }
+      if (!horarioSelecionado) {
+        alert("Por favor, selecione um horario.");
+        return;
+      }
+
+      const agendamentos = getAgendamentos();
+
+      const jaReservado = agendamentos.some(
+        a => a.data === data && a.horario === horarioSelecionado
+      );
+
+      if (jaReservado) {
+        document.getElementById("avisoReservado").classList.add("visivel");
+        document.getElementById("avisoSucesso").classList.remove("visivel");
+        renderHorarios();
+        return;
+      }
+
+      agendamentos.push({
+        nome: nome,
+        data: data,
+        horario: horarioSelecionado,
+        id: Date.now()
+      });
+
+      salvarAgendamentos(agendamentos);
+
+      document.getElementById("avisoSucesso").classList.add("visivel");
+      document.getElementById("avisoReservado").classList.remove("visivel");
+
+      horarioSelecionado = null;
+      document.getElementById("btnConfirmar").disabled = true;
+
+      renderHorarios();
+      renderMeusAgendamentos();
+    }
+
+    function cancelarAgendamento(id) {
+      let agendamentos = getAgendamentos();
+      agendamentos = agendamentos.filter(a => a.id !== id);
+      salvarAgendamentos(agendamentos);
+      renderHorarios();
+      renderMeusAgendamentos();
+    }
+
+    function renderMeusAgendamentos() {
+      const lista = document.getElementById("listaAgendamentos");
+      const agendamentos = getAgendamentos();
+
+      if (agendamentos.length === 0) {
+        lista.innerHTML = '<div class="sem-agendamentos">Nenhum agendamento ainda.</div>';
+        return;
+      }
+
+      agendamentos.sort((a, b) => {
+        if (a.data === b.data) return a.horario.localeCompare(b.horario);
+        return a.data.localeCompare(b.data);
+      });
+
+      lista.innerHTML = "";
+      agendamentos.forEach(a => {
+        const partes = a.data.split("-");
+        const dataFormatada = partes[2] + "/" + partes[1] + "/" + partes[0];
+
+        const div = document.createElement("div");
+        div.className = "agendamento-item";
+        div.innerHTML =
+          '<div class="info"><strong>' + a.nome + '</strong> <span>' + dataFormatada + ' as ' + a.horario + '</span></div>' +
+          '<button class="btn-cancelar" onclick="cancelarAgendamento(' + a.id + ')">Cancelar</button>';
+        lista.appendChild(div);
+      });
+    }
+
+    document.getElementById("dataAgendamento").addEventListener("change", renderHorarios);
   </script>
 </body>
 </html>
